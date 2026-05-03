@@ -1168,7 +1168,7 @@ h5 {
 }
 
 .browse-card {
-    background-color: #ecfdf5; /* Ein sehr helles, pastelliges Mintgrün (CI passend) */
+    background-color: #fff;
     border-radius: 16px;
     display: flex;
     flex-direction: column;
@@ -1178,6 +1178,7 @@ h5 {
     cursor: pointer;
     transition: transform 0.1s ease;
     aspect-ratio: 3 / 4; /* Schönes Hochformat für die Karten */
+    position: relative; /* Wichtig, damit der Titel absolut positioniert werden kann */
 }
 
 .browse-card:active {
@@ -1185,9 +1186,14 @@ h5 {
 }
 
 .browse-card__title { /* Ist jetzt ein h4, erbt aber die Styles von dieser Klasse */
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background: linear-gradient(to bottom, #ffffff 30%, rgba(255, 255, 255, 0) 100%);
     text-align: center;
-    margin-top: 12px;
-    padding: 0 4px;
+    margin: 0;
+    padding: 12px 8px 35px 8px;
     line-height: 1.2;
     z-index: 2;
 }
@@ -1198,16 +1204,14 @@ h5 {
     display: flex;
     align-items: flex-end; /* Drückt das Bild ganz nach unten */
     justify-content: center;
-    padding: 0 8px; /* Etwas Puffer zu den Seiten */
 }
 
 .browse-card__img {
-    width: 90%;
-    height: 80%;
-    object-fit: contain; /* Erhält das Format des freigestellten Bildes */
-    object-position: bottom; /* Sitzt exakt auf dem unteren Rand auf */
-    border-bottom-left-radius: 16px;
-    border-bottom-right-radius: 16px;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: bottom center;
+    background-repeat: no-repeat;
 }
 
 /* --- Skeleton & JS-Auslagerungen --- */

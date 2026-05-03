@@ -37,8 +37,8 @@ document.addEventListener('DOMContentLoaded', () => {
         initProductOverlay();
     }
     
-    // 7. Initialisiere das Browse (Suchen) Modul
-    if (typeof initBrowseModule === 'function') {
-        initBrowseModule();
+    // 7. Initialisiere die Browse (Suchen) View
+    if (typeof initBrowseView === 'function') {
+        initBrowseView();
     }
 });
