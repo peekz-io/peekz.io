@@ -1,0 +1,1182 @@
+/* Lokale Roboto Schriftart laden */
+@font-face {
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url('../fonts/Roboto-Regular.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 500;
+    font-display: swap;
+    src: url('../fonts/Roboto-Medium.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 700;
+    font-display: swap;
+    src: url('../fonts/Roboto-Bold.ttf') format('truetype');
+}
+
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    /* Entfernt das dunkle Flackern beim Tippen auf dem iPhone */
+    -webkit-tap-highlight-color: transparent;
+}
+
+/* Sichert, dass Buttons und Formulare die Standard-Schriftart und -Größe erben */
+button, input, select, textarea {
+    font-family: inherit;
+    font-size: inherit;
+}
+
+html {
+    /* Natives App-Gefühl wiederherstellen: Blockiert den "Gummi-Band"-Effekt an den Rändern */
+    overscroll-behavior-y: none;
+    background-color: #efefef; /* Sichert die Hintergrundfarbe bei sehr kurzen Inhalten */
+}
+
+/* Basis-Schriftart sicherheitshalber global anwenden */
+body {
+    font-family: "Roboto", sans-serif;
+    font-weight: 400;
+    font-size: 0.85rem;
+    background: #efefef;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* Hilfsklasse um das Scrollen des Bodys zu blockieren, wenn Overlays offen sind */
+.body-no-scroll {
+    overflow: hidden !important;
+}
+
+#app-content {
+    width: 100%;
+    /* 60px Header + 24px Luft nach oben für das erste Element (Stories) */
+    padding-top: calc(84px + env(safe-area-inset-top)); 
+    /* Perfekt an das Menü angepasster Abstand, damit kein überflüssiger toter Raum entsteht */
+    padding-bottom: calc(75px + env(safe-area-inset-bottom));
+    /* 60px Header-Höhe + 32px harmonischer Abstand (wie der gap) */
+    padding-top: calc(92px + env(safe-area-inset-top)); 
+    /* ca. 60px Bottom-Menu-Höhe + 32px harmonischer Abstand */
+    padding-bottom: calc(92px + env(safe-area-inset-bottom));
+}
+
+.app-view {
+    display: none;
+    width: 100%;
+}
+
+.app-view.is-active {
+    display: flex;
+    flex-direction: column;
+    gap: 32px; /* Perfekter, einheitlicher Abstand zwischen ALLEN Modulen */
+    animation: viewFadeIn 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+@keyframes viewFadeIn {
+    from { opacity: 0; transform: translateY(15px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+#story-root {
+    width: 100%;
+}
+
+/* Verstecke den Scrollbar für Chrome, Safari und Opera */
+.no-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+
+/* Verstecke den Scrollbar für IE, Edge und Firefox */
+.no-scrollbar {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
+
+.container {
+    width: 100%;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* --- Header Modul --- */
+.app-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: #ffffff;
+    width: 100%;
+    /* Safe-Area für Notch am iPhone etc. */
+    padding-top: env(safe-area-inset-top);
+    border-bottom: 1px solid #e2e8f0; /* Wirkt edler und sauberer als ein harter Box-Shadow */
+    z-index: 9500; /* Höher als das Pull-to-Refresh Rad, damit dieses sauber darunter verschwindet */
+    transform: translateY(0);
+    transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+    will-change: transform;
+}
+
+.app-header--hidden {
+    transform: translateY(-100%);
+    transition: transform 0.4s ease-in-out;
+}
+
+.app-header__inner {
+    display: flex;
+    align-items: center;
+    height: 60px; /* Perfekte Höhe für Touch-Ziele */
+}
+
+.app-header__logo {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+}
+
+.app-header__logo-text {
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: #0f172a;
+    letter-spacing: -0.02em;
+}
+
+.app-header__logo-img {
+    height: 30px; /* Perfekte Größe, damit es hochwertig im 60px hohen Header sitzt */
+    width: auto;
+    object-fit: contain;
+}
+
+/* --- Story Modul Styles --- */
+.story-container {
+    /* Die Klasse .container auf #story-root in der index.html übernimmt das Padding */
+    display: flex;
+    gap: 1rem;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    padding: 0 15px;
+    width: 100%;
+}
+
+.story-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    flex-shrink: 0;
+    cursor: pointer;
+    transition: transform 150ms ease;
+}
+
+.story-item:active {
+    transform: scale(0.95);
+}
+
+.story-ring {
+    width: 6rem;
+    height: 6rem;
+    border-radius: 9999px;
+    padding: 3px;
+    background: linear-gradient(to top right, #115140 0%, #2DD4BF 39%, #A7F3D0 92%);
+}
+
+.story-inner {
+    width: 100%;
+    height: 100%;
+    border-radius: 9999px;
+    border: 3px solid #efefef;
+    background-color: #efefef;
+    overflow: hidden;
+    box-shadow: inset 0 2px 4px 0 rgba(0, 0, 0, 0.06);
+}
+
+.story-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.story-label {
+    font-weight: 500;
+    letter-spacing: 0;
+}
+
+/* --- Story Viewer Overlay --- */
+.story-viewer-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh; /* Fallback für ältere Browser */
+    height: 100dvh; /* Dynamische Viewport-Höhe, fixiert das Overlay IMMER bündig an den Rändern */
+    background-color: #111;
+    z-index: 9999;
+    display: none; /* Standardmäßig unsichtbar */
+    flex-direction: column;
+}
+
+.story-progress-container {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    right: 15px;
+    display: flex;
+    gap: 4px;
+    z-index: 10000;
+}
+
+.story-progress-bar {
+    flex: 1;
+    height: 2px;
+    background-color: rgba(255, 255, 255, 0.3);
+    border-radius: 2px;
+    overflow: hidden;
+}
+
+.story-progress-fill {
+    height: 100%;
+    background-color: #ffffff;
+    width: 0%; /* Startet bei 0% */
+    border-radius: 2px;
+}
+
+.story-viewer-close {
+    position: absolute;
+    top: 30px;
+    right: 15px;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 35px;
+    z-index: 10000;
+    cursor: pointer;
+    padding: 10px;
+}
+
+.story-viewer-img {
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    -webkit-user-select: none;
+    user-select: none;
+    -webkit-touch-callout: none;
+}
+
+/* --- Category Discovery Modul --- */
+.cat-discovery__title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    color: #111;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.cat-discovery__wrapper {
+    display: flex;
+    gap: 12px;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    padding-bottom: 15px; /* Platz für den Box-Shadow, damit er nicht abgeschnitten wird */
+    padding-left: 15px;
+    padding-right: 15px;
+    cursor: grab;
+}
+
+.cat-discovery__wrapper:active {
+    cursor: grabbing;
+}
+
+.cat-item {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    background: #ffffff;
+    border: 2px solid #ffffff;
+    border-radius: 50px;
+    padding: 8px 14px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    outline: none; /* Verhindert den Rahmen/das Vergrößern durch den Browser beim Klicken */
+    flex-shrink: 0;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    color: #333;
+}
+
+.cat-item--active {
+    border-color: transparent;
+    background-image: linear-gradient(#ffffff, #ffffff), linear-gradient(to top right, #115140 0%, #2DD4BF 39%, #A7F3D0 92%);
+    background-origin: border-box;
+    background-clip: padding-box, border-box;
+}
+
+.cat-item__icon {
+    width: 20px;
+    height: 20px;
+    object-fit: contain;
+}
+
+.cat-item__label {
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+/* --- Offers / Product Slider Modul --- */
+.offers-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.offers-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #0f172a;
+}
+
+.offers-view-all {
+    background-color: #fff;
+    color: #0f172a;
+    border: none;
+    font-size: 0.75rem;
+    border-radius: 50px;
+    padding: 8px 14px;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.offers-slider {
+    display: flex;
+    gap: 15px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-bottom: 20px; /* Schatten-Platz */
+    scroll-padding-left: 15px;
+}
+
+.offer-card {
+    flex-shrink: 0;
+    width: 140px; /* Etwas kompakter, da der weiße Rand wegfällt */
+    display: flex;
+    flex-direction: column;
+    scroll-snap-align: start;
+    position: relative;
+}
+
+.offer-img-wrapper {
+    width: 100%;
+    height: 140px;
+    position: relative;
+    border-radius: 20px; /* Alle Ecken rund */
+    background-color: #cbd5e1; /* Etwas dunkleres Grau als Lade-Hintergrund */
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08); /* Schatten liegt jetzt nur auf dem Bild */
+}
+
+.offer-img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 20px;
+    z-index: 1; /* Bild liegt im Hintergrund */
+}
+
+.offer-badges-wrapper {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 4px;
+    z-index: 10; /* Über dem Bild */
+    max-width: calc(100% - 16px); /* Verhindert Überlappen, falls der Text extrem lang wird */
+}
+
+.offer-badge {
+    background-color: rgba(255, 255, 255, 0.95); /* Heller Glas-Look sieht edler aus */
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    color: #0f172a;
+    font-size: 0.6rem; /* Minimal kleiner, damit lange Texte wie "23x bestellt" passen */
+    font-weight: 600; /* 600 statt 700 ist bei kleinem Text lesbarer */
+    padding: 4px 8px;
+    border-radius: 50px; /* Moderne Pill-Form */
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    display: flex;
+    align-items: center;
+    gap: 4px; /* Abstand zwischen Icon und Text */
+    width: fit-content;
+}
+
+/* Spezielles Styling für Badges in der CI-Farbe (z.B. Happy Hour) */
+.offer-badge--ci {
+    background-color: #d1fae5;
+    color: #115140;
+}
+
+/* Icon Styles im Badge */
+.offer-badge .icon-clock,
+.offer-badge .icon-flame {
+    flex-shrink: 0;
+}
+
+/* Leichte Puls-Animation nur für das Flammen-Icon */
+.offer-badge .icon-flame {
+    animation: flamePulse 2s infinite ease-in-out;
+    transform-origin: bottom center; /* Flamme brennt von unten */
+}
+
+@keyframes flamePulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.15); } /* Wächst in der Mitte leicht an */
+}
+
+.offer-info {
+    padding: 12px 4px 0 4px; /* Abstand nur nach oben zum Bild, leichter Einzug */
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.offer-title {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: #0f172a;
+    line-height: 1.2;
+    margin-bottom: 4px;
+    /* Zweizeilig abschneiden, wenn zu lang */
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.offer-desc {
+    font-size: 0.75rem;
+    color: #64748b;
+}
+
+.offer-price-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 6px;
+}
+
+.offer-price-old {
+    font-size: 0.7rem;
+    color: #94a3b8;
+    text-decoration: line-through;
+}
+
+.offer-price-current {
+    background-color: #d1fae5; /* Helles CI Grün */
+    color: #115140; /* Dunkles CI Grün */
+    font-weight: 700;
+    font-size: 0.85rem;
+    padding: 4px 8px;
+    border-radius: 8px;
+    display: inline-block;
+}
+
+.offer-action-wrapper {
+    position: absolute;
+    bottom: 8px;
+    right: 8px;
+    z-index: 10; /* Über dem Bild */
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.offer-add-btn {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background-color: #115140;
+    color: #fff;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(17, 81, 64, 0.3);
+}
+
+.offer-stepper {
+    display: none;
+    background-color: #115140;
+    color: #fff;
+    border-radius: 50px;
+    height: 36px;
+    align-items: center;
+    padding: 0 4px;
+    gap: 8px;
+    box-shadow: 0 4px 10px rgba(17, 81, 64, 0.3);
+}
+
+.offer-stepper.is-active {
+    display: flex;
+    animation: popIn 0.2s ease-out forwards;
+    transform-origin: right center; /* Wächst von rechts nach links auf */
+}
+
+@keyframes popIn {
+    0% { transform: scale(0.8); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+.stepper-btn {
+    background: none;
+    border: none;
+    color: #fff;
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    cursor: pointer;
+}
+
+.stepper-count {
+    font-weight: 700;
+    font-size: 0.85rem;
+    min-width: 12px;
+    text-align: center;
+}
+
+/* --- Hero Banner Modul --- */
+.hero-section {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.hero-slider {
+    display: flex;
+    gap: 15px; /* Abstand zwischen den Slides */
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    padding-left: 15px; /* Äußerer Abstand nach links */
+    padding-right: 15px; /* Äußerer Abstand nach rechts */
+    padding-bottom: 20px; /* Genug Platz nach unten, damit der Box-Shadow nicht abgehakt wird */
+    scroll-padding-left: 15px; /* Sichert, dass das Scroll-Snapping den Padding-Abstand beachtet */
+    scroll-padding-right: 15px;
+}
+
+.hero-slide {
+    flex-shrink: 0;
+    width: calc(100vw - 30px); /* Exakte Breite minus linkem und rechtem Padding */
+    aspect-ratio: 21 / 9; /* Breites Banner-Format */
+    min-height: 150px;
+    border-radius: 24px;
+    scroll-snap-align: start; /* Perfektes Einrasten mit scroll-padding am Rand */
+    display: flex;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+}
+
+.hero-slide__content {
+    flex: 1;
+    padding: 1.25rem 0 1.25rem 1.25rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.hero-slide__headline {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #0f172a; /* Dunkelblau */
+    margin-bottom: 0.20rem;
+    line-height: 1.1;
+    text-transform: uppercase;
+}
+
+.hero-slide__subline {
+    font-size: 0.85rem;
+    color: #334155;
+    margin-bottom: 0.75rem;
+}
+
+.hero-slide__btn {
+    align-self: flex-start;
+    background-color: #115140 ;
+    color: white;
+    border: none;
+    border-radius: 50px;
+    padding: 8px 14px;
+    font-weight: 700;
+    font-size: 0.75rem;
+}
+
+.hero-slide__btn:active {
+    transform: scale(0.95);
+}
+
+.hero-slide__visual {
+    flex: 0.8; /* Nimmt etwas weniger Platz ein als der Text */
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.hero-slide__visual img {
+    width: 75%;
+    height: 75%;
+    object-fit: contain; /* Füllt die rechte Seite komplett mit dem Bild aus */
+}
+
+/* --- Hero Pagination (Dots) --- */
+.hero-pagination {
+    display: flex;
+    justify-content: center;
+    gap: 6px;
+    align-items: center;
+}
+
+.hero-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background-color: #cbd5e1; /* Inaktiv: Hellgrau */
+    border: none;
+    transition: all 0.3s ease;
+}
+
+.hero-dot--active {
+    width: 20px; /* Aktiv: Pill Shape */
+    background-color: #115140;
+    border-radius: 4px;
+}
+
+/* --- Pull to Refresh Modul --- */
+.ptr-container {
+    position: fixed;
+    top: calc(60px + env(safe-area-inset-top)); /* Startet exakt unter der Kante des fixierten Headers */
+    left: 0;
+    width: 100%;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transform: translateY(-100%);
+    z-index: 9000;
+    pointer-events: none;
+    opacity: 0;
+}
+
+.ptr-spinner {
+    width: 28px;
+    height: 28px;
+    border: 3px solid #cbd5e1;
+    border-top: 3px solid #115140; /* Dunkelgrün, passend zu deiner CI */
+    border-radius: 50%;
+}
+
+.ptr-container.refreshing .ptr-spinner {
+    animation: ptr-spin 0.8s linear infinite;
+}
+
+@keyframes ptr-spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* --- Skeleton Loading Styles --- */
+.skeleton-pulse {
+    display: inline-block;
+    height: 100%;
+    width: 100%;
+    background: linear-gradient(-90deg, #e2e8f0 0%, #f1f5f9 50%, #e2e8f0 100%);
+    background-size: 400% 400%;
+    animation: skeleton-pulse 1.2s ease-in-out infinite;
+}
+
+@keyframes skeleton-pulse {
+    0% {
+        background-position: 0% 0%;
+    }
+    100% {
+        background-position: -135% 0%;
+    }
+}
+
+.skeleton-circle {
+    border-radius: 50%;
+}
+
+/* For media fade-in and blur-up effect */
+.media-loading {
+    opacity: 0;
+    filter: blur(10px);
+    transition: opacity 0.4s ease-in-out, filter 0.4s ease-in-out;
+}
+
+.media-loaded {
+    opacity: 1;
+    filter: blur(0px);
+}
+
+/* --- Bottom Navigation Modul --- */
+.menu-bottom-wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh; /* Fallback für ältere Browser */
+    height: 100dvh; /* Zwingt Chrome & Safari, sich dynamisch und in Echtzeit an die Adressleiste anzupassen */
+    z-index: 8000;
+    pointer-events: none; /* Verhindert, dass der unsichtbare Wrapper Touches verschluckt */
+}
+
+.menu-bottom-nav {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: #ffffff;
+    /* Padding nutzt die Safe-Area, damit der Balken sich perfekt an den iOS Home-Button anpasst */
+    padding-top: 10px;
+    padding-bottom: calc(10px + env(safe-area-inset-bottom));
+    display: flex;
+    justify-content: space-between; /* Elemente pressen sich links und rechts perfekt an das Container-Padding */
+    align-items: center;
+    box-shadow: 0 -4px 20px rgba(0,0,0,0.05); /* Dezenter Schatten nach oben */
+    pointer-events: auto; /* Da der Balken nun solide weiß ist, blockiert er Touches darunter */
+    
+    /* Hardware-beschleunigt, aber initial versteckt */
+    transform: translateY(150%); /* 150% schiebt das Menü inklusive Schatten perfekt aus dem Bild */
+    /* Animation beim AUSBLENDEN (gleichmäßiges Sliden, damit es nicht sofort wegschießt) */
+    transition: transform 0.4s ease-in-out;
+    will-change: transform; /* Verhindert das Ruckeln (Repaint-Lag) unter iOS Chrome */
+}
+
+/* Klasse wird von JS gesetzt, wenn gescrollt wird -> Menü fährt weich hoch */
+.menu-bottom-wrapper.is-visible .menu-bottom-nav {
+    transform: translateY(0);
+    /* Animation beim EINBLENDEN (schneller Start, weiches Abbremsen) */
+    transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.menu-btn {
+    flex: 1; /* Sichert exakt identische Abstände für alle 5 Buttons */
+    background: transparent;
+    border: none;
+    display: flex;
+    flex-direction: column; /* Icon oben, Text unten */
+    justify-content: center;
+    align-items: center;
+    gap: 5px; /* Abstand zwischen Icon und Text */
+    padding: 4px 0;
+    color: #64748b; /* Inaktive Icons in dezentem Grau */
+    cursor: pointer;
+    transition: transform 0.2s ease, color 0.2s ease;
+}
+
+/* Wenn das Menü unsichtbar ist, blockieren wir Klicks, damit man nicht aus Versehen etwas drückt */
+.menu-bottom-wrapper:not(.is-visible) .menu-bottom-nav {
+    pointer-events: none;
+}
+
+.menu-btn--active {
+    color: #0f172a; /* Aktives Icon in starkem Schwarz/Dunkel */
+}
+
+.menu-btn__label {
+    font-weight: 500;
+    font-size: 0.65rem; /* Native Textgröße für App-Tab-Bars */
+}
+
+.menu-btn:active {
+    transform: scale(0.92);
+}
+
+/* --- Product Overlay Styles --- */
+:root {
+    --ci-primary-color: #115140;
+    --ci-accent-color: #2DD4BF;
+    --ci-text-main: #0f172a;
+    --ci-text-muted: #64748b;
+    --ci-bg-light: rgba(0, 0, 0, 0.6);
+    --ci-card-bg: #ffffff;
+    --ci-border-radius-large: 24px;
+    --ci-border-radius-small: 8px;
+    --ci-font-headline: "Roboto", sans-serif;
+    --ci-font-body: "Roboto", sans-serif;
+}
+
+.product-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    height: 100dvh;
+    z-index: 10001;
+    display: none;
+}
+
+.product-overlay__backdrop {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--ci-bg-light); /* Wieder abgedunkelt für mehr Tiefe */
+    opacity: 0;
+}
+
+.product-overlay__content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    pointer-events: none;
+    background-color: var(--ci-card-bg); /* Die gesamte Slide-Fläche ist nun weiß */
+    will-change: transform; /* Hardware-Beschleunigung für butterweiches Sliden */
+}
+
+.product-overlay__header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 15px;
+    padding-top: calc(15px + env(safe-area-inset-top));
+    display: flex;
+    justify-content: flex-start;
+    pointer-events: none;
+    z-index: 10;
+}
+
+.product-overlay__back-btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: none;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    pointer-events: auto;
+}
+
+.product-overlay__image-container {
+    width: 100%;
+    height: 45vh;
+    min-height: 250px;
+    position: relative;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.product-overlay__media-wrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.product-overlay__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.product-overlay__badges {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 15px;
+    padding-top: calc(15px + env(safe-area-inset-top));
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 6px;
+    z-index: 10;
+}
+
+.product-overlay__properties {
+    position: absolute;
+    bottom: 15px;
+    left: 20px;
+    display: flex;
+    gap: 10px;
+    pointer-events: auto;
+}
+
+.product-overlay__properties .property-icon {
+    color: white;
+    background: rgba(0,0,0,0.3);
+    border-radius: 50%;
+    padding: 6px;
+    width: 32px;
+    height: 32px;
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+}
+
+.product-overlay__main-card {
+    padding: 24px 20px;
+    padding-bottom: calc(24px + env(safe-area-inset-bottom));
+    pointer-events: auto;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.product-overlay__info-group {
+    display: flex;
+    flex-direction: column;
+    gap: 2px; /* Deutlich verringerter Abstand zwischen Titel und Beschreibung */
+}
+
+.product-overlay__category {
+    font-family: var(--ci-font-headline);
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--ci-primary-color);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 4px; /* Gibt der Kategorie ein klein wenig Luft zur Headline */
+}
+
+.product-overlay__short-desc {
+    font-family: var(--ci-font-body);
+    font-size: 0.9rem;
+    color: var(--ci-text-muted);
+    line-height: 1.4;
+}
+
+.product-overlay__title {
+    font-family: var(--ci-font-headline);
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--ci-text-main);
+    line-height: 1.2;
+}
+
+.product-overlay__price-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 12px; /* Abstand zwischen aktuellem und altem Preis */
+}
+
+.product-overlay__price {
+    font-family: var(--ci-font-headline);
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--ci-text-main);
+}
+
+.product-overlay__base-price {
+    font-family: var(--ci-font-body);
+    font-size: 1.1rem; /* Etwas größer gemacht, damit es neben dem 1.5rem Preis besser wirkt */
+    color: var(--ci-text-muted);
+    text-decoration: line-through;
+}
+
+.product-overlay__add-btn {
+    background-color: var(--ci-primary-color);
+    color: white;
+    border: none;
+    border-radius: var(--ci-border-radius-small);
+    padding: 16px;
+    font-size: 1rem;
+    font-weight: 700;
+    font-family: var(--ci-font-headline);
+    cursor: pointer;
+    width: 100%;
+    box-shadow: 0 4px 15px rgba(17, 81, 64, 0.2);
+    transition: transform 0.1s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px; /* Abstand zwischen dem Herz-Icon und dem Text */
+}
+
+.product-overlay__add-btn:active {
+    transform: scale(0.98);
+}
+
+.product-overlay__accordion {
+    border-top: 1px solid #e2e8f0;
+    border-bottom: 1px solid #e2e8f0;
+    padding: 12px 0;
+}
+
+.product-overlay__accordion + .product-overlay__accordion {
+    border-top: none; /* Verhindert eine doppelte Trennlinie zwischen zwei Accordions */
+}
+
+.product-overlay__accordion-summary {
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: var(--ci-font-headline);
+    font-weight: 600;
+    color: var(--ci-text-main);
+    cursor: pointer;
+}
+
+.product-overlay__accordion-summary::-webkit-details-marker {
+    display: none;
+}
+
+.product-overlay__accordion[open] .accordion-icon {
+    transform: rotate(180deg);
+}
+
+.product-overlay__accordion-content {
+    padding-top: 12px;
+    font-family: var(--ci-font-body);
+    font-size: 0.85rem;
+    color: var(--ci-text-muted);
+    line-height: 1.5;
+}
+
+.product-overlay__similar {
+    margin-top: 8px;
+}
+
+.product-overlay__similar-title {
+    font-family: var(--ci-font-headline);
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--ci-text-main);
+    margin-bottom: 12px;
+}
+
+.product-overlay__similar-slider {
+    display: flex;
+    gap: 12px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    padding-bottom: 10px;
+    margin-left: -20px;
+    margin-right: -20px;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.product-overlay__similar-slider .similar-card {
+    flex-shrink: 0;
+    width: 100px;
+    scroll-snap-align: start;
+}
+
+.product-overlay__similar-slider .similar-img {
+    width: 100%;
+    height: 100px;
+    border-radius: var(--ci-border-radius-small);
+    background-color: #f1f5f9;
+    margin-bottom: 8px;
+    object-fit: cover;
+}
+
+.product-overlay__similar-slider .similar-title {
+    height: 12px;
+    width: 80%;
+    border-radius: 4px;
+    background-color: #f1f5f9;
+}
+
+/* --- Browse / Suchen Modul (Digitale Speisekarte) --- */
+.browse-section {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.browse-title {
+    font-family: var(--ci-font-headline);
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--ci-text-main);
+}
+
+.browse-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* Exakt 3 Spalten */
+    gap: 12px;
+}
+
+.browse-card {
+    background-color: #ecfdf5; /* Ein sehr helles, pastelliges Mintgrün (CI passend) */
+    border-radius: 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-decoration: none;
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.1s ease;
+    aspect-ratio: 3 / 4; /* Schönes Hochformat für die Karten */
+}
+
+.browse-card:active {
+    transform: scale(0.96); /* Leichter Klick-Effekt */
+}
+
+.browse-card__title {
+    font-family: var(--ci-font-headline);
+    font-size: 0.7rem; /* Kompakte Schriftgröße, damit auch lange Worte passen */
+    font-weight: 700;
+    color: var(--ci-text-main);
+    text-align: center;
+    margin-top: 12px;
+    padding: 0 4px;
+    line-height: 1.2;
+    z-index: 2;
+}
+
+.browse-card__img-wrapper {
+    flex: 1;
+    width: 100%;
+    display: flex;
+    align-items: flex-end; /* Drückt das Bild ganz nach unten */
+    justify-content: center;
+    padding: 0 8px; /* Etwas Puffer zu den Seiten */
+}
+
+.browse-card__img {
+    width: 90%;
+    height: 80%;
+    object-fit: contain; /* Erhält das Format des freigestellten Bildes */
+    object-position: bottom; /* Sitzt exakt auf dem unteren Rand auf */
+    border-bottom-left-radius: 16px;
+    border-bottom-right-radius: 16px;
+}

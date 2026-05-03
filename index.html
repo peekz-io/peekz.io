@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="theme-color" content="#efefef">
+    <title>MOSS Bar & Lounge - peekz.io</title>
+    
+    <!-- Datenquelle laden (muss in den Head, damit wir das erste Bild sofort kennen) -->
+    <script src="js/data.js"></script>
+
+    <!-- Dynamischer Preload für das erste Bild (LCP) für perfekten Google PageSpeed -->
+    <script>
+        if (typeof storyData !== 'undefined' && storyData.length > 0) {
+            const preloadLink = document.createElement("link");
+            preloadLink.rel = "preload";
+            preloadLink.as = "image";
+            preloadLink.href = storyData[0].thumbnail;
+            preloadLink.setAttribute("fetchpriority", "high");
+            document.head.appendChild(preloadLink);
+        }
+    </script>
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <!-- Header Modul -->
+    <div id="header-root"></div>
+
+    <!-- Pull to Refresh Indicator -->
+    <div id="ptr-container" class="ptr-container">
+        <div class="ptr-spinner"></div>
+    </div>
+    
+    <!-- Main Content Area -->
+    <div id="app-content">
+        
+        <!-- View 1: Entdecken (Startseite) -->
+        <div id="view-discover" class="app-view is-active">
+            <main id="story-root"></main>
+            <!-- Hero Banner Modul -->
+            <div id="hero-root"></div>
+            <!-- Offers / Product Slider Modul -->
+            <div id="offers-root"></div>
+            <!-- Category Discovery Modul -->
+            <div id="category-root"></div>
+        </div>
+
+        <!-- View 2: Suchen / Speisekarte -->
+        <div id="view-browse" class="app-view">
+            <div id="browse-root"></div>
+        </div>
+        
+    </div>
+
+    <!-- Bottom Navigation Modul -->
+    <div id="menu-bottom-root"></div>
+    
+    <!-- Story Viewer Overlay (Fullscreen) -->
+    <div id="story-viewer" class="story-viewer-overlay">
+        <div id="story-progress-container" class="story-progress-container"></div>
+        <button id="story-viewer-close" class="story-viewer-close">&times;</button>
+        <div id="story-viewer-img" class="story-viewer-img"></div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/header.js"></script>
+    <script src="js/story.js"></script>
+    <script src="js/category-slider.js"></script>
+    <script src="js/banner.js"></script>
+    <script src="js/menu-bottom.js"></script>
+    <script src="js/offers.js"></script>
+    <script src="js/product-overlay.js"></script>
+    <script src="views/browse.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/pull-to-refresh.js"></script>
+</body>
+</html>
