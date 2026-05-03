@@ -19,4 +19,13 @@ function initNowPlaying() {
             </div>
         </div>
     `;
+
+    // Klick-Logik, um die Now-Playing Ansicht zu öffnen
+    const nowPlayingElement = root.querySelector('.now-playing');
+    nowPlayingElement.addEventListener('click', () => {
+        if (typeof window.switchAppView === 'function') {
+            if (sessionStorage.getItem('activeViewId') === 'nowplaying') return;
+            window.switchAppView('nowplaying', true);
+        }
+    });
 }

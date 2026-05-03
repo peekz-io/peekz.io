@@ -141,6 +141,12 @@ body {
     max-width: 125px; /* Begrenzt die Breite, damit es neben das Logo passt */
     gap: 8px;
     box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    cursor: pointer;
+    transition: transform 0.1s ease;
+}
+
+.now-playing:active {
+    transform: scale(0.96);
 }
 
 .now-playing__cover {

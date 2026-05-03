@@ -9,8 +9,8 @@ function initMenuBottom() {
     let path = window.location.pathname.replace(/^\/|\/$/g, '');
     let savedViewId = path === '' ? 'discover' : path;
 
-    const isValidView = bottomMenuData.some(item => item.id === savedViewId);
-    if (!isValidView) {
+    // Prüft, ob es überhaupt ein DIV mit dieser View-ID in der index.html gibt
+    if (!document.getElementById(`view-${savedViewId}`)) {
         savedViewId = sessionStorage.getItem('activeViewId') || 'discover';
     }
 
@@ -55,12 +55,12 @@ function initMenuBottom() {
         
         btn.addEventListener('click', () => {
             if (sessionStorage.getItem('activeViewId') === item.id) return; // Nichts tun, wenn schon aktiv
-            switchView(item.id, true);
+            window.switchAppView(item.id, true);
         });
     });
 
-    // Zentrale Funktion für den Ansicht-Wechsel
-    function switchView(viewId, addToHistory = true) {
+    // Zentrale Funktion für den Ansicht-Wechsel (Global für die ganze App verfügbar gemacht)
+    window.switchAppView = function(viewId, addToHistory = true) {
         const targetView = document.getElementById(`view-${viewId}`);
         if (!targetView) return;
 
@@ -86,18 +86,18 @@ function initMenuBottom() {
                 history.pushState({ viewId: viewId }, '', newUrl);
             } catch (e) {}
         }
-    }
+    };
 
     // Event-Listener für die nativen Browser Vor/Zurück Tasten (bzw. Wischgesten in Safari)
     window.addEventListener('popstate', (event) => {
         if (event.state && event.state.viewId) {
-            switchView(event.state.viewId, false); // false, damit wir nicht endlos neue Einträge pushen
+            window.switchAppView(event.state.viewId, false); // false, damit wir nicht endlos neue Einträge pushen
         } else {
             // Fallback auf URL-Pathname
             let currentPath = window.location.pathname.replace(/^\/|\/$/g, '');
             let fallbackView = currentPath === '' ? 'discover' : currentPath;
-            if (bottomMenuData.some(item => item.id === fallbackView)) {
-                switchView(fallbackView, false);
+            if (document.getElementById(`view-${fallbackView}`)) {
+                window.switchAppView(fallbackView, false);
             }
         }
     });
