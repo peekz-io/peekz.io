@@ -133,7 +133,7 @@ function openProductOverlay(sourceCard, offer) {
     }
 
     // 2. Skeleton vorbereiten (Lade-Indikator falls die Verbindung schlecht ist)
-    mediaWrapper.innerHTML = '<div id="product-overlay-skeleton" class="skeleton-pulse" style="width: 100%; height: 100%; position: absolute; top: 0; left: 0;"></div>';
+    mediaWrapper.innerHTML = '<div id="product-overlay-skeleton" class="skeleton-pulse product-overlay__skeleton"></div>';
 
     // 3. Medien-Element dynamisch erzeugen
     let overlayMedia;
@@ -207,10 +207,10 @@ function openProductOverlay(sourceCard, offer) {
                     : `<img class="similar-img" src="${sim.image || 'https://images.unsplash.com/photo-1575859431774-2e57ed632664?auto=format&fit=crop&w=800&q=80'}" alt="${sim.title}">`;
                 
                 return `
-                    <div class="similar-card" style="cursor: pointer;">
+                    <div class="similar-card">
                         ${mediaHtml}
-                        <div style="font-family: var(--ci-font-headline); font-size: 0.8rem; font-weight: 600; color: var(--ci-text-main); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-bottom: 2px;">${sim.title}</div>
-                        <div style="font-family: var(--ci-font-headline); font-size: 0.75rem; font-weight: 700; color: var(--ci-primary-color);">${sim.price}</div>
+                        <div class="similar-card__title">${sim.title}</div>
+                        <div class="similar-card__price">${sim.price}</div>
                     </div>
                 `;
             }).join('');

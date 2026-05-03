@@ -19,14 +19,14 @@ function initOffersModule() {
         skeletonHtml += `
             <div class="offer-card is-skeleton">
                 <div class="offer-img-wrapper">
-                    <div class="skeleton-pulse img-pulse" style="border-radius: 20px;"></div>
+                    <div class="skeleton-pulse img-pulse offer-skeleton-img"></div>
                 </div>
                 <div class="offer-info">
-                    <div class="offer-price-row" style="margin-bottom: 6px;">
-                        <div style="height: 22px; width: 60px; border-radius: 6px;"><div class="skeleton-pulse"></div></div>
+                    <div class="offer-price-row offer-skeleton-price-row">
+                        <div class="offer-skeleton-price"><div class="skeleton-pulse"></div></div>
                     </div>
-                    <div style="height: 14px; width: 80%; border-radius: 4px; margin-bottom: 6px;"><div class="skeleton-pulse"></div></div>
-                    <div style="height: 10px; width: 50%; border-radius: 4px;"><div class="skeleton-pulse"></div></div>
+                    <div class="offer-skeleton-title"><div class="skeleton-pulse"></div></div>
+                    <div class="offer-skeleton-desc"><div class="skeleton-pulse"></div></div>
                 </div>
             </div>
         `;
@@ -149,7 +149,7 @@ function initOffersModule() {
                 if (pulse) pulse.remove();
                 
                 const fallback = document.createElement('div');
-                fallback.style.cssText = 'position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; background: #e2e8f0; color: #94a3b8; font-size: 0.8rem; z-index: 1; border-radius: 20px;';
+                fallback.className = 'offer-media-fallback';
                 fallback.textContent = 'Kein Video';
                 imgWrapper.insertBefore(fallback, imgWrapper.firstChild);
             };
@@ -189,7 +189,7 @@ function initOffersModule() {
                 if (pulse) pulse.remove();
                 
                 const fallback = document.createElement('div');
-                fallback.style.cssText = 'position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; background: #e2e8f0; color: #94a3b8; font-size: 0.8rem; z-index: 1; border-radius: 20px;';
+                fallback.className = 'offer-media-fallback';
                 fallback.textContent = 'Kein Bild';
                 imgWrapper.insertBefore(fallback, imgWrapper.firstChild);
             };

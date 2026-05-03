@@ -102,7 +102,7 @@ function renderStoryModule() {
         skeletonHtml += `
             <div class="story-item is-skeleton">
                 <div class="story-ring"><div class="story-inner skeleton-pulse skeleton-circle"></div></div>
-                <span class="story-label" style="height: 14px; width: ${randomWidth}px; border-radius: 4px;"><span class="skeleton-pulse"></span></span>
+                <span class="story-label story-skeleton-label" style="width: ${randomWidth}px;"><span class="skeleton-pulse"></span></span>
             </div>
         `;
     }

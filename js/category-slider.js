@@ -13,7 +13,7 @@ function initCategorySlider() {
     const widths = [120, 90, 150, 110, 130];
     categoryData.forEach((_, i) => {
         const w = widths[i % widths.length];
-        skeletonHtml += `<div class="cat-item is-skeleton" style="width: ${w}px;"><div class="skeleton-pulse" style="border-radius: 50px;"></div></div>`;
+        skeletonHtml += `<div class="cat-item is-skeleton" style="width: ${w}px;"><div class="skeleton-pulse cat-skeleton-pulse"></div></div>`;
     });
     skeletonHtml += `
             </div>
