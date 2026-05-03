@@ -149,8 +149,8 @@ const bottomMenuData = [
 
 // Datenquelle für das "Suchen" / Speisekarten-Modul (3-Spalten Grid)
 const browseCategoriesData = [
-    { id: 'c1', title: 'Shisha Klassik', image: 'img/cat-shisha.png' },
-    { id: 'c2', title: 'Shisha Premium', image: 'img/cat-shisha-premium.png' },
+    { id: 'c1', title: 'Shisha Klassik', image: 'img/happy-hour.jpg' },
+    { id: 'c2', title: 'Shisha Premium', image: 'img/happy-hour.jpg' },
     { id: 'c3', title: 'Köpfe & Zubehör', image: 'img/cat-zubehoer.png' },
     { id: 'c4', title: 'Kaffee-Spezialitäten', image: 'img/cat-kaffee.png' },
     { id: 'c5', title: 'Tee-Variationen', image: 'img/cat-tee.png' },

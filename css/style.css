@@ -1266,24 +1266,16 @@ h5 {
     border-radius: 50px;
 }
 
-.browse-skeleton-title {
+.browse-skeleton-text {
     height: 10px;
     width: 70%;
     border-radius: 4px;
-    margin-top: 14px;
-}
-
-.browse-skeleton-img-wrapper {
-    margin-top: auto;
-    height: 65%;
-    width: 100%;
-    padding: 0 8px 8px 8px;
+    margin: 0 auto; /* Zentriert im absoluten Title-Container */
 }
 
 .browse-skeleton-img {
     width: 100%;
     height: 100%;
-    border-radius: 8px;
 }
 
 .product-overlay__skeleton {

@@ -9,8 +9,10 @@ function initBrowseCategories() {
     browseCategoriesData.forEach(() => {
         skeletonHtml += `
             <div class="browse-card is-skeleton" tabindex="0" role="button">
-                <div class="browse-skeleton-title skeleton-pulse"></div>
-                <div class="browse-card__img-wrapper browse-skeleton-img-wrapper">
+                <div class="browse-card__title">
+                    <div class="skeleton-pulse browse-skeleton-text"></div>
+                </div>
+                <div class="browse-card__img-wrapper">
                     <div class="skeleton-pulse browse-skeleton-img"></div>
                 </div>
             </div>
@@ -43,7 +45,7 @@ function initBrowseCategories() {
 
         imgPreload.onerror = () => {
             card.classList.remove('is-skeleton');
-            const fallbackUrl = 'https://images.unsplash.com/photo-1575859431774-2e57ed632664?auto=format&fit=crop&w=200&q=80&transparent=1';
+            const fallbackUrl = 'img/happy-hour.jpg';
             card.innerHTML = `
                 <h4 class="browse-card__title">${cat.title}</h4>
                 <div class="browse-card__img-wrapper">
