@@ -4,15 +4,19 @@ function initMenuBottom() {
     const root = document.getElementById('menu-bottom-root');
     if (!root || typeof bottomMenuData === 'undefined') return;
 
-    // Aktiven Tab auslesen: 1. URL Hash, 2. SessionStorage, 3. Standard ('discover')
-    let savedViewId = window.location.hash.replace('#', '');
+    // Aktiven Tab auslesen: 1. URL Pathname (Clean URL), 2. SessionStorage, 3. Standard ('discover')
+    // Entfernt Slashes am Anfang und Ende (z.B. "/browse" -> "browse")
+    let path = window.location.pathname.replace(/^\/|\/$/g, '');
+    let savedViewId = path === '' ? 'discover' : path;
+
     const isValidView = bottomMenuData.some(item => item.id === savedViewId);
-    if (!savedViewId || !isValidView) {
+    if (!isValidView) {
         savedViewId = sessionStorage.getItem('activeViewId') || 'discover';
     }
 
-    // Initialen State für die History-API setzen (für den ersten "Zurück"-Schritt)
-    history.replaceState({ viewId: savedViewId }, '', `#${savedViewId}`);
+    // Initialen State für die History-API setzen (Ohne Raute, Clean URL)
+    const initialUrl = savedViewId === 'discover' ? '/' : `/${savedViewId}`;
+    history.replaceState({ viewId: savedViewId }, '', initialUrl);
     sessionStorage.setItem('activeViewId', savedViewId);
 
     // Direkt die korrekte Ansicht aktivieren, um Flackern beim Neuladen zu verhindern
@@ -72,7 +76,9 @@ function initMenuBottom() {
         setTimeout(checkScrollVisibility, 50);
 
         if (addToHistory) {
-            history.pushState({ viewId: viewId }, '', `#${viewId}`);
+            // Setzt saubere Pfade: "discover" wird zu "/", alles andere zu "/viewId"
+            const newUrl = viewId === 'discover' ? '/' : `/${viewId}`;
+            history.pushState({ viewId: viewId }, '', newUrl);
         }
     }
 
@@ -81,10 +87,11 @@ function initMenuBottom() {
         if (event.state && event.state.viewId) {
             switchView(event.state.viewId, false); // false, damit wir nicht endlos neue Einträge pushen
         } else {
-            // Fallback auf URL-Hash
-            const hash = window.location.hash.replace('#', '');
-            if (hash && bottomMenuData.some(item => item.id === hash)) {
-                switchView(hash, false);
+            // Fallback auf URL-Pathname
+            let currentPath = window.location.pathname.replace(/^\/|\/$/g, '');
+            let fallbackView = currentPath === '' ? 'discover' : currentPath;
+            if (bottomMenuData.some(item => item.id === fallbackView)) {
+                switchView(fallbackView, false);
             }
         }
     });
