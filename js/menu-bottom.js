@@ -15,8 +15,12 @@ function initMenuBottom() {
     }
 
     // Initialen State für die History-API setzen (Ohne Raute, Clean URL)
-    const initialUrl = savedViewId === 'discover' ? '/' : `/${savedViewId}`;
-    history.replaceState({ viewId: savedViewId }, '', initialUrl);
+    try {
+        const initialUrl = savedViewId === 'discover' ? '/' : `/${savedViewId}`;
+        history.replaceState({ viewId: savedViewId }, '', initialUrl);
+    } catch (e) {
+        console.warn("History API (Clean URLs) funktioniert nur auf einem echten Server (Vercel/Localhost).");
+    }
     sessionStorage.setItem('activeViewId', savedViewId);
 
     // Direkt die korrekte Ansicht aktivieren, um Flackern beim Neuladen zu verhindern
@@ -76,9 +80,11 @@ function initMenuBottom() {
         setTimeout(checkScrollVisibility, 50);
 
         if (addToHistory) {
-            // Setzt saubere Pfade: "discover" wird zu "/", alles andere zu "/viewId"
-            const newUrl = viewId === 'discover' ? '/' : `/${viewId}`;
-            history.pushState({ viewId: viewId }, '', newUrl);
+            try {
+                // Setzt saubere Pfade: "discover" wird zu "/", alles andere zu "/viewId"
+                const newUrl = viewId === 'discover' ? '/' : `/${viewId}`;
+                history.pushState({ viewId: viewId }, '', newUrl);
+            } catch (e) {}
         }
     }
 
