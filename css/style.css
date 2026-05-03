@@ -126,7 +126,89 @@ body {
 .app-header__inner {
     display: flex;
     align-items: center;
+    justify-content: space-between; /* Drückt das Logo nach links, Now Playing nach rechts */
     height: 60px; /* Perfekte Höhe für Touch-Ziele */
+}
+
+/* --- Now Playing Modul --- */
+.now-playing {
+    display: flex;
+    align-items: center;
+    background: rgba(15, 23, 42, 0.85); /* Dunkler Glassmorphism-Hintergrund */
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border-radius: 50px;
+    padding: 4px 12px 4px 4px;
+    height: 36px;
+    max-width: 150px; /* Begrenzt die Breite, damit es neben das Logo passt */
+    gap: 8px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.now-playing__cover {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    object-fit: cover;
+    animation: recordSpin 4s linear infinite;
+    flex-shrink: 0;
+    border: 1px solid #1e293b;
+}
+
+@keyframes recordSpin {
+    100% { transform: rotate(360deg); }
+}
+
+.now-playing__info {
+    flex: 1;
+    overflow: hidden;
+    white-space: nowrap;
+    /* Erzeugt einen weichen Verlauf an den Rändern, damit der Text sanft verschwindet */
+    mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+    -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+}
+
+.now-playing__ticker {
+    display: inline-block;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #ffffff;
+    padding-left: 100%; /* Startet den Text unsichtbar rechts */
+    animation: tickerScroll 8s linear infinite;
+}
+
+.now-playing__artist {
+    color: #00ffff; /* Markenfarbe Cyan */
+    font-weight: 400;
+}
+
+@keyframes tickerScroll {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-100%); }
+}
+
+.now-playing__bars {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    height: 14px;
+    flex-shrink: 0;
+}
+
+.now-playing__bar {
+    width: 3px;
+    background-color: #00ffff;
+    border-radius: 2px;
+    animation: soundWave 1.2s ease-in-out infinite;
+}
+
+.now-playing__bar:nth-child(1) { animation-delay: -0.2s; height: 60%; }
+.now-playing__bar:nth-child(2) { animation-delay: -0.4s; height: 100%; }
+.now-playing__bar:nth-child(3) { animation-delay: -0.6s; height: 80%; }
+
+@keyframes soundWave {
+    0%, 100% { transform: scaleY(0.5); }
+    50% { transform: scaleY(1); }
 }
 
 .app-header__logo {

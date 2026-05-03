@@ -3,6 +3,13 @@ const appConfig = {
     logo: "img/logo.png" // Dynamisches Logo für den Header
 };
 
+// Datenquelle für das "Now Playing" Modul im Header
+const nowPlayingData = {
+    title: "Midnight City",
+    artist: "M83",
+    cover: "https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?auto=format&fit=crop&w=100&q=80" // Platzhalter
+};
+
 // Datenquelle für das Story-Modul - einfach austauschbar für neue Kunden
 
 const storyData = [
@@ -122,12 +129,6 @@ const bottomMenuData = [
         icon: '<svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg>' 
     },
     { 
-        id: 'jukebox', 
-        label: 'Jukebox',
-        active: false, 
-        icon: '<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l12-2v13"></path><circle cx="6" cy="18" r="3"></circle><circle cx="18" cy="16" r="3"></circle></svg>' 
-    },
-    { 
         id: 'browse', 
         label: 'Suchen', 
         active: false, 
@@ -138,6 +139,12 @@ const bottomMenuData = [
         label: 'MO',
         active: false, 
         icon: '<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="10" rx="2"></rect><circle cx="12" cy="5" r="2"></circle><path d="M12 7v4"></path><line x1="8" y1="16" x2="8.01" y2="16"></line><line x1="16" y1="16" x2="16.01" y2="16"></line></svg>' 
+    },
+    { 
+        id: 'chat', 
+        label: 'Chat',
+        active: false, 
+        icon: '<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>' 
     },
     { 
         id: 'favorites', 

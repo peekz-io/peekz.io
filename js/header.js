@@ -15,6 +15,8 @@ function initHeader() {
             <div class="container app-header__inner">
                 <!-- Logo mit a-Tag umschließen, typisch für App-Startseiten -->
                 <a href="#" class="app-header__logo" aria-label="Startseite">${logoHtml}</a>
+                <!-- Container für das Now Playing Modul auf der rechten Seite -->
+                <div id="now-playing-root"></div>
             </div>
         </header>
     `;
