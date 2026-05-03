@@ -7,11 +7,6 @@ document.addEventListener('DOMContentLoaded', () => {
         initHeader();
     }
 
-    // 0.5 Initialisiere Now Playing Modul (im Header)
-    if (typeof initNowPlaying === 'function') {
-        initNowPlaying();
-    }
-
     // 1. Initialisiere das Story-Modul
     if (typeof initStoryModule === 'function') {
         initStoryModule();
