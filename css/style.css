@@ -60,13 +60,7 @@ body {
 
 #app-content {
     width: 100%;
-    /* 60px Header + 24px Luft nach oben für das erste Element (Stories) */
-    padding-top: calc(84px + env(safe-area-inset-top)); 
-    /* Perfekt an das Menü angepasster Abstand, damit kein überflüssiger toter Raum entsteht */
-    padding-bottom: calc(75px + env(safe-area-inset-bottom));
-    /* 60px Header-Höhe + 32px harmonischer Abstand (wie der gap) */
     padding-top: calc(92px + env(safe-area-inset-top)); 
-    /* ca. 60px Bottom-Menu-Höhe + 32px harmonischer Abstand */
     padding-bottom: calc(92px + env(safe-area-inset-bottom));
 }
 
@@ -152,6 +146,33 @@ body {
     height: 30px; /* Perfekte Größe, damit es hochwertig im 60px hohen Header sitzt */
     width: auto;
     object-fit: contain;
+}
+
+/* --- Typografie Standards --- */
+h1, h2, h3, h4, h5 {
+    font-family: var(--ci-font-headline);
+    color: var(--ci-text-main);
+}
+
+h1 {
+    font-size: 1.8rem;
+    font-weight: 800;
+}
+h2 {
+    font-size: 1.25rem; /* Standardgröße für die meisten Section-Titel */
+    font-weight: 700;
+}
+h3 {
+    font-size: 1.1rem;
+    font-weight: 700;
+}
+h4 {
+    font-size: 0.7rem;
+    font-weight: 700;
+}
+h5 {
+    font-size: 0.75rem;
+    font-weight: 700;
 }
 
 /* --- Story Modul Styles --- */
@@ -273,10 +294,7 @@ body {
 
 /* --- Category Discovery Modul --- */
 .cat-discovery__title {
-    font-size: 1.25rem;
-    font-weight: 700;
     margin-bottom: 1rem;
-    color: #111;
     padding-left: 15px;
     padding-right: 15px;
 }
@@ -338,11 +356,6 @@ body {
     margin-bottom: 1rem;
 }
 
-.offers-title {
-    font-size: 1.25rem;
-    font-weight: 700;
-    color: #0f172a;
-}
 
 .offers-view-all {
     background-color: #fff;
@@ -454,9 +467,7 @@ body {
 }
 
 .offer-title {
-    font-size: 0.9rem;
-    font-weight: 700;
-    color: #0f172a;
+    font-size: 0.9rem; /* Override für h3 */
     line-height: 1.2;
     margin-bottom: 4px;
     /* Zweizeilig abschneiden, wenn zu lang */
@@ -602,9 +613,6 @@ body {
 }
 
 .hero-slide__headline {
-    font-size: 1.4rem;
-    font-weight: 700;
-    color: #0f172a; /* Dunkelblau */
     margin-bottom: 0.20rem;
     line-height: 1.1;
     text-transform: uppercase;
@@ -964,9 +972,6 @@ body {
 }
 
 .product-overlay__category {
-    font-family: var(--ci-font-headline);
-    font-size: 0.75rem;
-    font-weight: 700;
     color: var(--ci-primary-color);
     text-transform: uppercase;
     letter-spacing: 0.05em;
@@ -981,10 +986,7 @@ body {
 }
 
 .product-overlay__title {
-    font-family: var(--ci-font-headline);
-    font-size: 1.3rem;
-    font-weight: 700;
-    color: var(--ci-text-main);
+    font-size: 1.3rem; /* Override für h2 */
     line-height: 1.2;
 }
 
@@ -1073,10 +1075,6 @@ body {
 }
 
 .product-overlay__similar-title {
-    font-family: var(--ci-font-headline);
-    font-size: 1.1rem;
-    font-weight: 700;
-    color: var(--ci-text-main);
     margin-bottom: 12px;
 }
 
@@ -1159,10 +1157,8 @@ body {
 }
 
 .browse-title {
-    font-family: var(--ci-font-headline);
     font-size: 1.5rem;
-    font-weight: 800;
-    color: var(--ci-text-main);
+    font-weight: 800; /* Override */
 }
 
 .browse-grid {
@@ -1189,10 +1185,6 @@ body {
 }
 
 .browse-card__title { /* Ist jetzt ein h4, erbt aber die Styles von dieser Klasse */
-    font-family: var(--ci-font-headline);
-    font-size: 0.7rem; /* Kompakte Schriftgröße, damit auch lange Worte passen */
-    font-weight: 700;
-    color: var(--ci-text-main);
     text-align: center;
     margin-top: 12px;
     padding: 0 4px;
