@@ -1356,3 +1356,204 @@ h5 {
     font-weight: 700;
     color: var(--ci-primary-color);
 }
+
+/* --- Jukebox Modul --- */
+.jukebox-section {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.jukebox-hero {
+    background-color: rgba(255, 255, 255, 0.85); /* Leicht transparent für den Blur */
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-radius: var(--ci-border-radius-large);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    box-shadow: 0 8px 25px rgba(45, 212, 191, 0.15); /* Cyan Glow Effekt */
+    position: relative;
+    overflow: hidden;
+}
+
+/* Minimaler Verlauf über den Blur hinweg, wirkt edler */
+.jukebox-hero::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: linear-gradient(180deg, rgba(45, 212, 191, 0.05) 0%, rgba(255,255,255,0) 100%);
+    pointer-events: none;
+}
+
+.jukebox-hero__cover-wrapper {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    box-shadow: 0 10px 30px rgba(45, 212, 191, 0.4); /* Leuchtendes Cyan */
+    margin-bottom: 16px;
+    overflow: hidden;
+    position: relative;
+}
+
+.jukebox-hero__cover {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.jukebox-hero__info {
+    margin-bottom: 16px;
+    z-index: 1;
+}
+
+.jukebox-hero__title {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--ci-text-main);
+    margin-bottom: 4px;
+}
+
+.jukebox-hero__artist {
+    font-size: 0.9rem;
+    color: var(--ci-text-muted);
+    font-family: var(--ci-font-body);
+}
+
+.jukebox-hero__progress {
+    width: 100%;
+    z-index: 1;
+}
+
+.jukebox-hero__progress-bar {
+    width: 100%;
+    height: 6px;
+    background-color: rgba(226, 232, 240, 0.5); /* e2e8f0 mit Opacity */
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.jukebox-hero__progress-fill {
+    height: 100%;
+    background-color: var(--ci-accent-color);
+    width: 45%; /* Dummy progress */
+    border-radius: 10px;
+    box-shadow: 0 0 10px var(--ci-accent-color); /* Cyan glow am Slider */
+}
+
+.jukebox-list-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 4px;
+}
+
+.jukebox-list-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--ci-text-main);
+}
+
+.jukebox-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding-bottom: 20px;
+    -webkit-overflow-scrolling: touch;
+}
+
+.jukebox-track {
+    display: flex;
+    align-items: center;
+    background-color: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-radius: 16px;
+    padding: 12px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.03);
+    gap: 12px;
+    transition: transform 0.1s ease;
+}
+
+.jukebox-track:active {
+    transform: scale(0.98);
+}
+
+.jukebox-track__rank {
+    font-weight: 700;
+    color: var(--ci-text-muted);
+    font-size: 0.9rem;
+    width: 20px;
+    text-align: center;
+}
+
+.jukebox-track__cover {
+    width: 48px;
+    height: 48px;
+    border-radius: var(--ci-border-radius-small);
+    object-fit: cover;
+}
+
+.jukebox-track__info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.jukebox-track__title {
+    font-weight: 700;
+    font-size: 0.9rem;
+    color: var(--ci-text-main);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-bottom: 2px;
+}
+
+.jukebox-track__artist {
+    font-size: 0.75rem;
+    color: var(--ci-text-muted);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.jukebox-track__vote-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: none;
+    border: none;
+    color: var(--ci-text-muted);
+    cursor: pointer;
+    transition: color 0.2s ease, transform 0.2s ease;
+    min-width: 40px;
+    gap: 2px;
+}
+
+.jukebox-track__vote-btn:active {
+    transform: scale(0.9);
+}
+
+.jukebox-track__vote-btn .vote-icon {
+    transition: fill 0.2s ease, stroke 0.2s ease, filter 0.2s ease;
+}
+
+.jukebox-track__vote-btn.is-voted {
+    color: var(--ci-accent-color);
+}
+
+.jukebox-track__vote-btn.is-voted .vote-icon {
+    fill: var(--ci-accent-color);
+    stroke: var(--ci-accent-color);
+    filter: drop-shadow(0 0 6px rgba(45, 212, 191, 0.6));
+}
+
+.vote-count {
+    font-size: 0.7rem;
+    font-weight: 600;
+}

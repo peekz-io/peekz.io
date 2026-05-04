@@ -41,4 +41,9 @@ document.addEventListener('DOMContentLoaded', () => {
     if (typeof initBrowseView === 'function') {
         initBrowseView();
     }
+    
+    // 8. Initialisiere die Jukebox View
+    if (typeof initJukeboxView === 'function') {
+        initJukeboxView();
+    }
 });
