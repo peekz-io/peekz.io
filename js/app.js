@@ -32,6 +32,11 @@ document.addEventListener('DOMContentLoaded', () => {
         initOffersModule();
     }
     
+    // 5.5 Initialisiere das Live-Battle Modul
+    if (typeof initBattleModule === 'function') {
+        initBattleModule();
+    }
+    
     // 6. Initialisiere das Product Overlay
     if (typeof initProductOverlay === 'function') {
         initProductOverlay();

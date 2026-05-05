@@ -149,6 +149,28 @@ const offersData = [
     }
 ];
 
+// Datenquelle für das Live-Battle Modul
+const battleData = {
+    id: 'battle-001',
+    title: 'Geschmacks-Battle',
+    // Timer: Startet automatisch mit 60 Minuten ab dem Laden (Für Produktion durch festen Timestamp ersetzen)
+    endTime: Date.now() + 60 * 60 * 1000, 
+    options: [
+        { 
+            id: 'opt1', 
+            name: 'Doppelapfel', 
+            image: 'img/doppelapfel.jpg', 
+            votes: 245 
+        },
+        { 
+            id: 'opt2', 
+            name: 'Love 66', 
+            image: 'img/love66.jpg', 
+            votes: 210 
+        }
+    ]
+};
+
 // Datenquelle für die untere Navigation (Bottom Menu)
 const bottomMenuData = [
     { 

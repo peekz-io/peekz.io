@@ -1163,6 +1163,266 @@ h5 {
     background-color: #f1f5f9;
 }
 
+/* --- Live Battle Modul --- */
+.battle-section {
+    padding: 0 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.battle-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 4px;
+}
+
+.battle-live-badge {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.75rem;
+    font-weight: 800;
+    color: #ef4444; /* Rot für Live */
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.battle-live-dot {
+    width: 8px;
+    height: 8px;
+    background-color: #ef4444;
+    border-radius: 50%;
+    animation: live-pulse 1.5s infinite;
+}
+
+@keyframes live-pulse {
+    0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); }
+    70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(239, 68, 68, 0); }
+    100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
+}
+
+.battle-timer {
+    font-family: monospace;
+    font-weight: 800;
+    color: var(--ci-text-main);
+    background: #ffffff;
+    padding: 4px 10px;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    transition: color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.battle-timer.is-urgent {
+    color: #ef4444;
+    animation: urgent-pulse 1s infinite alternate;
+}
+
+@keyframes urgent-pulse {
+    0% { box-shadow: 0 0 10px rgba(239, 68, 68, 0.2); }
+    100% { box-shadow: 0 0 20px rgba(239, 68, 68, 0.6); }
+}
+
+.battle-container {
+    background-color: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    border-radius: var(--ci-border-radius-large);
+    padding: 16px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.04);
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    position: relative;
+    overflow: hidden;
+}
+
+.battle-intro {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin-bottom: -4px; /* Zieht das Grid optisch etwas näher an den Text heran */
+}
+
+.battle-intro__title {
+    font-size: 1.3rem;
+    font-weight: 800;
+    color: var(--ci-text-main);
+}
+
+.battle-intro__text {
+    font-size: 0.85rem;
+    color: var(--ci-text-muted);
+    line-height: 1.4;
+}
+
+.battle-intro__options {
+    font-weight: 700;
+    color: var(--ci-text-main);
+    display: inline-block;
+    margin-top: 4px;
+}
+
+.battle-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Zwingt die Bilder exakt nebeneinander */
+    gap: 12px;
+}
+
+.battle-card {
+    position: relative;
+    border-radius: 16px;
+    overflow: hidden;
+    aspect-ratio: 3 / 4;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.battle-card:active:not(.is-disabled) {
+    transform: scale(0.96);
+}
+
+.battle-card.is-voted {
+    box-shadow: 0 8px 25px rgba(45, 212, 191, 0.4);
+    border: 2px solid var(--ci-accent-color);
+}
+
+/* Defokus: Die NICHT gewählte Karte tritt optisch zurück */
+.battle-card.is-disabled:not(.is-voted) {
+    filter: grayscale(80%) opacity(0.5);
+    transform: scale(0.95);
+}
+
+.battle-card.is-loser {
+    filter: grayscale(100%) opacity(0.5);
+    transform: scale(0.95);
+}
+
+.battle-card.is-winner {
+    box-shadow: 0 10px 40px rgba(45, 212, 191, 0.6);
+    border: 3px solid var(--ci-accent-color);
+    transform: scale(1.02);
+    z-index: 2;
+}
+
+.battle-card__img {
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+}
+
+.battle-card__overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 20px 10px 10px 10px;
+    background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0) 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.battle-card__title {
+    color: #ffffff;
+    font-weight: 700;
+    font-size: 0.85rem;
+    text-align: center;
+    margin-bottom: 6px;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+}
+
+.battle-vs-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 4px;
+}
+
+.battle-vs-label {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: var(--ci-font-headline);
+    font-weight: 800;
+    font-size: 1.2rem;
+    color: var(--ci-text-main);
+}
+
+.battle-vs-text {
+    font-size: 0.8rem;
+    color: var(--ci-text-muted);
+    font-weight: 700;
+    background: #e2e8f0;
+    padding: 2px 8px;
+    border-radius: 50px;
+}
+
+.battle-vs-bar {
+    width: 100%;
+    height: 14px;
+    background-color: #e2e8f0;
+    border-radius: 50px;
+    display: flex;
+    overflow: hidden;
+    box-shadow: inset 0 2px 5px rgba(0,0,0,0.06);
+}
+
+.battle-vs-fill {
+    height: 100%;
+    transition: width 0.8s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.battle-vs-fill--left {
+    background: linear-gradient(to right, #115140, var(--ci-accent-color));
+}
+
+.battle-vs-fill--right {
+    background: linear-gradient(to left, #334155, #94a3b8);
+}
+
+.battle-vs-votes {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--ci-text-muted);
+}
+
+/* Puls-Animation für Live-Echtzeit-Feeling */
+.is-pulsing {
+    animation: liveTextPulse 0.6s ease-out;
+}
+
+@keyframes liveTextPulse {
+    0% { transform: scale(1); color: var(--ci-text-muted); }
+    30% { transform: scale(1.15); color: var(--ci-accent-color); }
+    100% { transform: scale(1); color: var(--ci-text-muted); }
+}
+
+.battle-winner-banner {
+    display: none;
+    background: linear-gradient(to right, #115140, #2DD4BF);
+    color: white;
+    text-align: center;
+    padding: 12px;
+    border-radius: 12px;
+    font-weight: 700;
+    font-size: 0.9rem;
+    animation: viewFadeIn 0.5s ease;
+    box-shadow: 0 4px 15px rgba(45, 212, 191, 0.3);
+    cursor: pointer;
+}
+
+.battle-winner-banner:active {
+    transform: scale(0.98);
+}
+
 /* --- Browse / Suchen Modul (Digitale Speisekarte) --- */
 .browse-section {
     display: flex;
