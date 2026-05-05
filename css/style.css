@@ -319,17 +319,75 @@ h5 {
     border-radius: 2px;
 }
 
-.story-viewer-close {
+.story-viewer-gradient {
     position: absolute;
-    top: 30px;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 120px;
+    background: linear-gradient(to bottom, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0) 100%);
+    z-index: 9999;
+    pointer-events: none;
+}
+
+img#story-viewer-avatar {
+    object-fit: contain;
+    padding: 3px;
+}
+
+.story-viewer-header {
+    position: absolute;
+    top: 25px; /* Perfekt unter der Progress-Bar (die sitzt bei 15px) */
+    left: 15px;
     right: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 10000;
+}
+
+.story-viewer-user {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.story-viewer-avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    background-color: #fff;
+}
+
+.story-viewer-name {
+    color: #ffffff;
+    font-family: var(--ci-font-headline);
+    font-weight: 700;
+    font-size: 0.9rem;
+    text-shadow: 0 1px 4px rgba(0,0,0,0.5);
+}
+
+.story-viewer-time {
+    color: rgba(255, 255, 255, 0.7);
+    font-family: var(--ci-font-body);
+    font-weight: 400;
+    font-size: 0.85rem;
+    text-shadow: 0 1px 4px rgba(0,0,0,0.5);
+}
+
+.story-viewer-close {
+    position: static;
     background: none;
     border: none;
     color: white;
-    font-size: 35px;
+    font-size: 30px;
+    line-height: 1;
     z-index: 10000;
     cursor: pointer;
-    padding: 10px;
+    padding: 4px;
+    text-shadow: 0 1px 4px rgba(0,0,0,0.5);
 }
 
 .story-viewer-img {

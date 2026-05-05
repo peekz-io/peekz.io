@@ -13,11 +13,11 @@ const nowPlayingData = {
 // Datenquelle für das Story-Modul - einfach austauschbar für neue Kunden
 
 const storyData = [
-    { id: 1,  label: "Neu!", thumbnail: "img/moss-title.jpg", image: "img/moss-title-full.jpg" },
-    { id: 2,  label:"Happy Hour", thumbnail: "img/happy-hour.jpg", image: "img/happy-hour.jpg" },
-    { id: 3,  label: "Shisha Deal", thumbnail: "img/shisha.jpg", image: "img/shisha.jpg" },
-    { id: 4,  label: "Ladies Night", thumbnail: "img/ladies-night.jpg", image: "img/ladies-night.jpg" },
-    { id: 5,  label: "Couple Deal", thumbnail: "img/couple-deal.jpg", image: "img/couple-deal.jpg" },
+    { id: 1,  label: "Neu!", time: "1h", thumbnail: "img/moss-title.jpg", image: "img/moss-title-full.jpg" },
+    { id: 2,  label:"Happy Hour", time: "3h", thumbnail: "img/happy-hour.jpg", image: "img/happy-hour.jpg" },
+    { id: 3,  label: "Shisha Deal", time: "5h", thumbnail: "img/shisha.jpg", image: "img/shisha.jpg" },
+    { id: 4,  label: "Ladies Night", time: "8h", thumbnail: "img/ladies-night.jpg", image: "img/ladies-night.jpg" },
+    { id: 5,  label: "Couple Deal", time: "12h", thumbnail: "img/couple-deal.jpg", image: "img/couple-deal.jpg" },
 ];
 
 // Datenquelle für das Kategorie-Slider-Modul

@@ -93,8 +93,17 @@
     
     <!-- Story Viewer Overlay (Fullscreen) -->
     <div id="story-viewer" class="story-viewer-overlay">
+        <!-- Dunkler Verlauf oben, damit weiße Schrift auf hellen Bildern lesbar bleibt -->
+        <div class="story-viewer-gradient"></div>
         <div id="story-progress-container" class="story-progress-container"></div>
-        <button id="story-viewer-close" class="story-viewer-close">&times;</button>
+        <div class="story-viewer-header">
+            <div class="story-viewer-user">
+                <img src="img/logo.png" alt="MOSS Logo" class="story-viewer-avatar" id="story-viewer-avatar">
+                <span class="story-viewer-name">MOSS Bar & Lounge</span>
+                <span class="story-viewer-time" id="story-viewer-time">2h</span>
+            </div>
+            <button id="story-viewer-close" class="story-viewer-close">&times;</button>
+        </div>
         <div id="story-viewer-img" class="story-viewer-img"></div>
     </div>
 

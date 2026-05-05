@@ -176,6 +176,18 @@ function showStory(index, isInitial = false) {
     
     const viewerImg = document.getElementById('story-viewer-img');
     
+    // Zeitstempel (Time) dynamisch updaten
+    const timeEl = document.getElementById('story-viewer-time');
+    if (timeEl && storyData[index].time) {
+        timeEl.textContent = storyData[index].time;
+    }
+
+    // Automatisches Logo laden, falls in der appConfig vorhanden und kein SVG:
+    const avatarEl = document.getElementById('story-viewer-avatar');
+    if (avatarEl && typeof appConfig !== 'undefined' && appConfig.logo && !appConfig.logo.startsWith('<svg')) {
+        avatarEl.src = appConfig.logo;
+    }
+
     clearTimeout(storyTimeout);
 
     const progressContainer = document.getElementById('story-progress-container');
